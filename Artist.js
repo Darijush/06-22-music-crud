@@ -23,12 +23,12 @@ playlist(){
 
 let res =[]
  for (let i = 0; i < this.songlist.length; i++){
-    res.push(Object.values(this.songlist[i]).join(' '))
+    res.push(Object.values(this.songlist[i].id + this.songlist[i].sname +' ('+ this.songlist[i].count+')').join(''));
  }
 return this.songlistheader.concat(res).join('\r\n');
 }
 playSong(num){
-    this.sesionPlayed += 1;
+    this.totalplayed += 1;
 for (let j = 0; j < this.songlist.length; j++ ){
     if (num === j){
         this.songlist[j].count += 1;
@@ -39,7 +39,8 @@ for (let j = 0; j < this.songlist.length; j++ ){
 
 }
 fortune(){
-    this.profit += this.sesionPlayed*this.workprice
+    this.profit += (this.totalplayed - this.sesionPlayed)*this.workprice
+    this.sesionPlayed = this.totalplayed;
  return `Total lifetime wealth of ${this.name} is ${this.profit.toFixed(2)} ${this.cur} right now!`
 }
 }
