@@ -4,7 +4,7 @@ constructor(name, cur){
     this.cur = cur;
     this.workprice = 0;
     this.songlist = [];
-    this.songlistheader = [`${this.name}'s playlist:`, '='.repeat(this.name.length+12)];
+    this.songlistheader = `${this.name}'s playlist:`;
     this.totalplayed = 0;
     this.sesionPlayed = 0;
     this.profit = 0;
@@ -17,15 +17,19 @@ songPrice(num){
     return `${this.name}'s price per song is ${this.workprice} ${this.cur}`
 }
 addSong(songname){
-    this.songlist.push({id: `${this.songlist.length+1}.`, sname: songname, count: 0})
+    this.songlist.push({ sname: songname, count: 0})
+    return `Song added: ${songname}`
 }
 playlist(){
-
+let maxLength = this.songlistheader.length
 let res =[]
  for (let i = 0; i < this.songlist.length; i++){
-    res.push(Object.values(this.songlist[i].id + this.songlist[i].sname +' ('+ this.songlist[i].count+')').join(''));
+    res.push(`${i+1}. `+Object.values(this.songlist[i].sname +' ('+ this.songlist[i].count+')').join(''));
+    if (res[i].length > maxLength){
+        maxLength = res[i].length;
+    }
  }
-return this.songlistheader.concat(res).join('\r\n');
+return this.songlistheader+`\r\n`+('='.repeat(maxLength)+`\r\n`)+(res).join('\r\n');
 }
 playSong(num){
     this.totalplayed += 1;
